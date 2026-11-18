@@ -1,0 +1,4 @@
+# The eval set is hashed (eval_set_sha) and compared across Windows dev machines and Linux CI:
+# keep its bytes identical everywhere.
+src/data/eval/*.jsonl text eol=lf
+src/data/eval/*.json  text eol=lf

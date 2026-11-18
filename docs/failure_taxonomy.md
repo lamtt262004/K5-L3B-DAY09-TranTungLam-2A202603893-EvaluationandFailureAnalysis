@@ -20,7 +20,7 @@ Mã và tên ngắn cố định (dùng trong `failure_modes` của eval set). Q
 
 ## Gắn nhãn eval set (M1)
 `src/lab9/evalset.py::CLAIM_FMS` (mã chính đứng đầu), provenance `from_trace` trỏ tới trace bằng chứng ở trên, `checked_by: trace_replay`.
-`python -m lab9.evalset --check` → `eval set d024594cb4a6: 0 problem(s)`.
+`python -m lab9.evalset --check` → `eval set ac239cf575a5: 0 problem(s)`.
 
 | Item | Claim | FM (chính trước) | Ghi chú |
 |---|---|---|---|

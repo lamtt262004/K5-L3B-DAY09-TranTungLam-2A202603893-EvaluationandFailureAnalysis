@@ -2,8 +2,8 @@
 
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi con số dưới đây lấy từ report do `lab9.eval` sinh ra (commit bằng `git add -f src/reports/*.json`), không gõ tay.
 
-- **Run ID / eval set SHA:** baseline v1 `E-swarm-20261118-d024` · eval set v1 `d024594cb4a6`; baseline v2 `E-swarm-20261118-3d72` · eval set v2 `3d720138af98`
-- **Phiên bản:** code = nhánh `starter/d09` (commit trong PR) · eval set v1 (sha `d024594cb4a6`) · `metric_spec` 1.0 / 2.0 · grader `src/lab9/graders.py` cùng commit · seeds 11/22/33/44/55 · MockLLM · Python 3.13 · pydantic-evals 2.68.0
+- **Run ID / eval set SHA:** baseline v1 `E-swarm-20261118-ac23` · eval set v1 `ac239cf575a5`; baseline v2 `E-swarm-20261118-fee2` · eval set v2 `fee220a7c7ae`
+- **Phiên bản:** code = nhánh `starter/d09` (commit trong PR) · eval set v1 (sha `ac239cf575a5`) · `metric_spec` 1.0 / 2.0 · grader `src/lab9/graders.py` cùng commit · seeds 11/22/33/44/55 · MockLLM · Python 3.13 · pydantic-evals 2.68.0
 - **Eval set:** v1 = 14 item × 5 seed (70 trial), nguồn `lab8_public`; nhãn tách riêng ở `labels_v1.json`; mỗi item có `failure_modes` + `provenance.from_trace`. v2 = v1 + 14 item adversarial của giảng viên = 28 item × 5 seed (140 trial).
 - **Metric & ngưỡng (v1, `config/metric_spec.yaml`):**
 
@@ -22,9 +22,9 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
 
   | Shape (run ID) | pass_rate | Δ pass_rate [CI] | refund_amount_correct | reply_matches_ledger | Gate |
   |---|---|---|---|---|---|
-  | swarm baseline `E-swarm-20261118-d024` | 0.9857 | — | 0.9857 | 1.0 | — |
-  | fixed `E-fixed-20261118-d024` | 1.0 | +0.014 [+0.000, +0.043] | 1.0 | 1.0 | **exit 0 — merge** |
-  | seeded_regression `E-seeded_regression-20261118-d024` | 0.7143 | **−0.271 [−0.500, −0.057]** | 0.8571 (Δ −0.129 [−0.315, 0]) | 0.7857 (Δ −0.214 [−0.429, 0]) | **exit 1 — blocked: refund_amount_correct, pass_rate, reply_matches_ledger** |
+  | swarm baseline `E-swarm-20261118-ac23` | 0.9857 | — | 0.9857 | 1.0 | — |
+  | fixed `E-fixed-20261118-ac23` | 1.0 | +0.014 [+0.000, +0.043] | 1.0 | 1.0 | **exit 0 — merge** |
+  | seeded_regression `E-seeded_regression-20261118-ac23` | 0.7143 | **−0.271 [−0.500, −0.057]** | 0.8571 (Δ −0.129 [−0.315, 0]) | 0.7857 (Δ −0.214 [−0.429, 0]) | **exit 1 — blocked: refund_amount_correct, pass_rate, reply_matches_ledger** |
 
   Grader M3 (`python -m lab9.mutation --detect`): **phát hiện 100%** dòng fail của `seeded_regression` được ít nhất một grader khác giải thích, **báo nhầm 0%** trên `fixed`.
 - **Judge:** tone_ok κ = 0.757, P = 0.857, R = 0.80 → dùng (non-blocking). helpful κ = 0.375, P = 1.0, R = 0.30 → **loại**: bỏ sót 21/30 câu trả lời xấu, chủ yếu sai số tiền mà judge không có ledger để so (xem `docs/judge_audit.md`).
@@ -47,8 +47,8 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
 
   | Variant (run ID) | pass_rate (Δ, CI) | Chặn bởi |
   |---|---|---|
-  | slice_regression `E-slice_regression-20261118-3d72` | 0.9357 (Δ −0.043 [−0.121, +0.029]) — **trên sàn, CI chạm 0** | `slice:money_movement/pass_rate` 0.85 (Δ −0.150 [−0.300, 0]), `slice:money_movement/refund_amount_correct` 0.85, `slice:adversarial/pass_rate` 0.914 |
-  | flaky_regression `E-flaky_regression-20261118-3d72` | 0.9143 (Δ −0.064 [−0.114, −0.014]) | **`pass_hat_5` 0.5714** (12/28 item hỏng ở 1 seed), cùng `money_movement` và `pass_rate` |
+  | slice_regression `E-slice_regression-20261118-fee2` | 0.9357 (Δ −0.043 [−0.121, +0.029]) — **trên sàn, CI chạm 0** | `slice:money_movement/pass_rate` 0.85 (Δ −0.150 [−0.300, 0]), `slice:money_movement/refund_amount_correct` 0.85, `slice:adversarial/pass_rate` 0.914 |
+  | flaky_regression `E-flaky_regression-20261118-fee2` | 0.9143 (Δ −0.064 [−0.114, −0.014]) | **`pass_hat_5` 0.5714** (12/28 item hỏng ở 1 seed), cùng `money_movement` và `pass_rate` |
   | seeded_regression | 0.7143 | mọi metric năng lực + cả 5 slice |
 
   Tự thử thêm (không commit, script nháp): `misreport` (luôn hoặc 1/5 seed) chỉ bị `reply_matches_ledger` chặn, vì `pass_rate` = 1.0. `quiet_override` bị `refund_amount_correct`, `slice:denial`, `slice:adversarial` chặn. `stale_clause`/`sibling_refund`/`pre_deducted`/`round_down` chạy ở seed lẻ đều bị chặn. `paraphrase`/`extra_lookup` merge.

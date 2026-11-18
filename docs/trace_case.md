@@ -40,7 +40,7 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `seeded_regression C-002@11`, report `E-seeded_regression-20261118-d024` (eval set `d024594cb4a6`), row `E-002@11` |
+| Trial | `seeded_regression C-002@11`, report `E-seeded_regression-20261118-ac23` (eval set `ac239cf575a5`), row `E-002@11` |
 | Triệu chứng | `pass_rate`, `refund_amount_correct`, `db_fact_kept`, `proposal_correct` fail. Reply "đã hoàn 20.000đ cho đơn O-202"; ledger cũng ghi 20.000đ (reply khớp ledger, nên `reply_matches_ledger` không fail) nhưng nhãn là `denied`/0đ: khoản hoàn không được phép tồn tại. |
 | Bước sai đầu tiên | Event **3** `model_override {"delay_days": 5}` — agent ghi đè `delay_days` của DB bằng con số trong ticket ("giao trễ 5 ngày"). |
 | Vì sao là bước *đầu tiên* | Event 1 `handoff` đúng hợp đồng (`facts: {}`, không mang secret). Event 2 `investigator` đọc đúng DB: O-202 `delay_days = 2`, chưa đủ ngưỡng SHIP-LATE (≥ 3 ngày) → quote ban đầu là 0. Mọi bước sau (event 4 quote 20.000đ, refund, event 6 reply) đều là hệ quả hợp lệ của con số sai ở event 3. |
